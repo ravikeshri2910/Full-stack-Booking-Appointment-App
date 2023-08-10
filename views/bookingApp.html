@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+    <title>Hello, world!</title>
+
+    <style>
+        /* body{
+        justify-content: center;
+
+      } */
+
+        #call {
+            display: flex;
+        }
+
+        form {
+            /* width: 70%; */
+            /* padding: 1%; */
+            border: 1px solid orange;
+            margin-left: 10%;
+
+            align-items: center;
+        }
+        .item{
+            margin-bottom: 5px;
+        }
+
+        h3 {
+            /* justify-content: center; */
+            text-align: center;
+            /* margin-left: 40%; */
+        }
+
+        p {
+            text-align: center;
+            /* margin-left: 15%; */
+        }
+
+        .rat {
+            background-color: orange;
+            color: white;
+            width: 100%;
+            border: 3px solid white;
+            text-align: center;
+
+        }
+
+        .new {
+            background-color: orange;
+            color: white;
+        }
+
+        .listi {
+            margin-bottom: 2px;
+        }
+
+        #details {
+            width: 100%;
+            /* margin-left: 30%; */
+        }
+
+        .blue {
+            background-color: grey;
+        }
+        .contain{
+            /* border: 2px solid red; */
+            display: flex;
+        }
+        .fstCont{
+            width: 50%;
+        }
+        .detailCon{
+            width: 50%;
+            /* border: 2px soild red;
+            background-color: grey; */
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contain">
+        <div class="fstCont">
+            
+            <form>
+        
+                <h3></i>Booking Appointment App</h3>
+                <p id="token"></p>
+        
+                <hr>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name:</label>
+                    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp"
+                        placeholder="Enter name here">
+        
+                </div>
+                <div class="form-group">
+                    <label for="">Email:</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter email here">
+                </div>
+                <div class="form-group">
+                    <label for="">Phone:</label>
+                    <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter phone number here">
+                </div>
+        
+        
+                
+        
+                <button class="rat" type="submit" id="mouseover" onclick="consolevalue(event)">Submit</button>
+                <!-- <button class="rat" type="submit" id="update" onclick="updatePost(event)">Update</button> -->
+        
+                <ul id="some"></ul>
+            </form>
+        </div>
+        <div class="detailCon">
+
+            <div id="details" class="list">
+        
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+
+
+<script>
+
+
+
+    async function getDetails() {
+        // console.log("here")
+        try {
+
+            let res = await axios.get("http://localhost:3000/user/add-user")
+            // console.log(res.data.userdetails)
+            showOutputOfGet(res.data.userdetails);
+        } catch (err) { console.log(err) }
+    }
+    // console.log(res)
+
+
+    getDetails()
+
+    // window.addEventListener('DOMContentLoaded',()=>{
+
+    //     axios.get('https://crudcrud.com/api/cf124f3ac0754673bc2c4c22bc459386/callAppointment')
+    //         .then((res) => {
+    //             // console.log(res)
+    //             showOutputOfGet(res.data);
+    //         })
+    //         .catch((err) => console.log(err))
+    // })
+
+
+
+
+    async function consolevalue(event) {
+        try {
+            event.preventDefault();
+
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let phone = document.getElementById("phone").value;
+            console.log(name, email, phone);
+            // name.value = ""
+
+            const obj = {
+                name: name,
+                email: email,
+                phone: phone
+            }
+
+
+            let res = await axios.post("http://localhost:3000/user/add-user", obj)
+
+            let n = res.data.userdetails.name
+            let e = res.data.userdetails.email
+            let p = res.data.userdetails.phone
+            let id = res.data.userdetails.id
+            console.log(n,e,p)
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("phone").value = "";
+            //  }).catch((err)=> console.log(err))
+            showOutput(id,n,e,p)
+        } catch (err) { console.log("err" + err) }
+
+
+    }
+
+    // for post response
+    function showOutput(id,name,email,phone) {
+        // console.log(element)
+
+        let details = document.getElementById("details");
+
+        let div = document.createElement("div")
+
+        div.innerHTML = `<div class="item">${name}-${email}-${phone}<input  onClick="deleteLocaltorage(event,'${id}')" id="submit" class="btnDel" type="submit" value="Delete" /><input  onClick="editLocaltorage(event,'${id}')" id="submit" class="btnEdit" type="submit" value="Edit" /></div>`;
+
+        // div.innerHTML = `<div class="item">${data.name},${data.email},${data.phone}<input  onClick="deleteLocaltorage(event)" id="submit" class="btnDel" type="submit" value="x" /><input  onClick="editLocaltorage(event)" id="submit" class="btnEdit" type="submit" value="Edit" /></div>`;
+
+        details.append(div)
+    }
+
+    // for get response
+    function showOutputOfGet(data) {
+
+        console.log(data[0].email)
+        let details = document.getElementById("details");
+        details.innerHTML = "";
+
+        let arr = data.forEach(element => {
+            // console.log(element._id)
+
+            let div = document.createElement("div")
+
+            div.innerHTML = `<div class="item">${element.name}-${element.email}-${element.phone}<input  onClick="deleteLocaltorage(event,'${element.id}')" id="submit" class="btnDel" type="submit" value="Delete" /><input  onClick="editLocaltorage(event,'${element.id}')" id="submit" class="btnEdit" type="submit" value="Edit" /></div>`;
+
+            // div.innerHTML = `<div class="item">${data.name},${data.email},${data.phone}<input  onClick="deleteLocaltorage(event)" id="submit" class="btnDel" type="submit" value="x" /><input  onClick="editLocaltorage(event)" id="submit" class="btnEdit" type="submit" value="Edit" /></div>`;
+
+            details.append(div)
+        });
+    }
+
+    // deleting element form curd
+    async function deleteLocaltorage(event, id) {
+        try {
+
+            console.log(id)
+            event.preventDefault();
+            // let site
+            let site = `http://localhost:3000/user/add-user/${id}`
+            await axios.get(site)
+            //  console.log('res')
+            getDetails()
+        } catch (err) { console.log(err) }
+        // console.log(id)
+    }
+
+    async function editLocaltorage(event, id) {
+        try {
+
+
+            event.preventDefault();
+            let site
+            // let site = `https://crudcrud.com/api/cf124f3ac0754673bc2c4c22bc459386/callAppointment/${id}`
+            axios.get(site)
+            console.log(res.data.name)
+            getContent(res.data, id)
+        } catch (err) { console.log(err) }
+    }
+
+
+
+    function getContent(data, id) {
+        localStorage.setItem("key", id)
+        // console.log(id)
+        document.getElementById("name").value = data.name;
+        document.getElementById("email").value = data.email;
+        document.getElementById("phone").value = data.phone;
+
+    }
+
+    // let putId=getContent(data,inpm d)
+    // console.log(putId)
+
+
+    function updatePost(event) {
+        event.preventDefault();
+
+        let id = localStorage.getItem('key')
+        console.log(id)
+
+
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let phone = document.getElementById("phone").value;
+
+        // // console.log("here")
+        let site
+
+        axios.put(site, {
+
+            name: name,
+            email: email,
+            phone: phone
+
+        }).then((res) => {
+            // console.log(res)
+            getDetails()
+            localStorage.removeItem("key")
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("phone").value = "";
+            // showOutput(res)
+        }).catch((err) => console.log(err))
+        console.log("update")
+    }
+
+</script>
+
+</html>
